@@ -1,8 +1,18 @@
 #!/usr/bin/env ruby
 
-# Collect all arguments, convert them to integers (if possible) or keep as strings, and sort them
-result = ARGV.map { |arg| arg.to_i }
+# Collect arguments, convert numeric ones to integers, sort them properly, and print unique/all correctly
+numbers = []
+strings = []
 
-result.sort.each do |n|
+ARGV.each do |arg|
+  if arg =~ /^-?\d+$/
+    numbers << arg.to_i
+  else
+    strings << arg
+  end
+end
+
+# Sort numbers numerically and strings alphabetically, then print
+(numbers.sort + strings.sort).each do |n|
   puts n
 end
