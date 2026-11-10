@@ -17,6 +17,7 @@ int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
 
 	tmp = *head;
 
+	/* Əgər silinəcək düyün ilk düyündürsə (index == 0) */
 	if (index == 0)
 	{
 		*head = tmp->next;
@@ -26,6 +27,7 @@ int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
 		return (1);
 	}
 
+	/* Silinəcək düyünə (index) qədər irəliləyirik */
 	i = 0;
 	while (tmp != NULL && i < index)
 	{
@@ -33,11 +35,15 @@ int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
 		i++;
 	}
 
+	/* Əgər verilən indeks siyahının uzunluğundan böyükdürsə */
 	if (tmp == NULL)
 		return (-1);
 
-	(*head)->prev->next = (*head)->next;
+	/* ƏSAS DÜZƏLİŞ: tmp-dən əvvəlki düyünün 'next' göstəricisini yeniləyirik */
+	if (tmp->prev != NULL)
+		tmp->prev->next = tmp->next;
 
+	/* tmp-dən sonrakı düyünün 'prev' göstəricisini yeniləyirik */
 	if (tmp->next != NULL)
 		tmp->next->prev = tmp->prev;
 
